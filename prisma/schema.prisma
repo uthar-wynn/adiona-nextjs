@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum FuelType {
+  BENZINE
+  DIESEL
+  ETHANOL
+  LPG
+  CNG
+  ELEKTRISCH
+}
+
+model Vehicle {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  fuel_type   FuelType @default(BENZINE)
+  vin         String?
+  insurance   String?
+  plate       String?
+  make        String?
+  model       String?
+  year        String?
+  enabled     Boolean  @default(true)
+  user_id     String
+
+  fillups Fillup[]
+  Costs   Costs[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Fillup {
+  id           String   @id @default(uuid())
+  vehicle_id   String
+  date         DateTime
+  distance     Int
+  fuel         Float    @db.Double
+  full         Boolean  @default(true)
+  unit_price   Float    @db.Double
+  consumption  Float    @db.Double
+  volume_price Float    @db.Double
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  vehicle Vehicle @relation(fields: [vehicle_id], references: [id], onDelete: Cascade)
+
+  @@index([vehicle_id])
+}
+
+model Costs {
+  id              String    @id @default(uuid())
+  vehicle_id      String
+  remind_only     Boolean
+  category        String
+  title           String
+  cost            Float?    @default(0)
+  date            DateTime?
+  is_income       Boolean
+  repeat          String
+  notes           String?   @db.LongText // LongText
+  distance        Int?
+  remind_distance Int?
+  remind_date     DateTime?
+  repeat_distance Int?
+  repeat_months   Int?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  vehicle Vehicle @relation(fields: [vehicle_id], references: [id], onDelete: Cascade)
+
+  @@index([vehicle_id])
+}
