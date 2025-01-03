@@ -1,6 +1,6 @@
 "use client"
 
-import { DashboardDataType, getDashboardData } from "@/app/actions/dashboard/get-data";
+import { DashboardDataType, GetDashboardData } from "@/app/actions/dashboard/get-data";
 import EmptyState from "@/components/EmptyState";
 import { PageError } from "@/components/page-error";
 import { PageLoader } from "@/components/page-loader";
@@ -15,7 +15,7 @@ const DashboardClient = () => {
 
     const { data, isFetching } = useQuery<DashboardDataType>({
         queryKey: ["dashboard", selectedVehicle?.id],
-        queryFn: () => getDashboardData(selectedVehicle!.id),
+        queryFn: () => GetDashboardData(selectedVehicle!.id),
         enabled: !!selectedVehicle
     })
 
@@ -29,8 +29,8 @@ const DashboardClient = () => {
     if (!data) return <PageError message="No data found" />
 
     return (
-        <div className="flex flex-col">
-            <div className="flex justify-between">
+        <div className="flex flex-1 flex-col h-full gap-2">
+            <div className="flex items-center justify-between">
                 <h1 className="text-3xl font-bold ">
                     Dashboard
                 </h1>

@@ -3,7 +3,7 @@ import { Separator } from "@/components/ui/separator"
 import { currencyFilter } from "@/lib/filters"
 import { Costs } from "@prisma/client"
 import { format } from "date-fns"
-import { AlignLeftIcon, CalendarRangeIcon, Fuel } from "lucide-react"
+import { AlignLeftIcon, CalendarRangeIcon } from "lucide-react"
 import { CostItemActions } from "./cost-item-actions"
 
 interface Props {
@@ -19,8 +19,8 @@ export const CostItem = ({
                 <div className="flex flex-row justify-between">
                     <div className="flex flex-col space-y-4">
                         <div className="flex space-x-6 items-center">
-                            <div className="bg-cyan-600 size-12 rounded-full flex items-center justify-center">
-                                <Fuel className="size-6 text-white" />
+                            <div className="bg-cyan-600 size-12 rounded-full flex items-center justify-center text-2xl">
+                                {cost.category.charAt(0).toUpperCase()}
                             </div>
                             <div className="flex flex-col">
                                 <span className="text-lg">

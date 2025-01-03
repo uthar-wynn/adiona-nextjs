@@ -2,7 +2,7 @@
 
 import db from "@/lib/db"
 import { differenceInDays, differenceInMonths, endOfMonth, endOfYear, startOfMonth, startOfYear, subMonths, subYears } from "date-fns"
-import getFillupsByVehicleId, { FillupType } from "../fillups/getFillupsByVehicleId"
+import { EnrichedFillup, EnrichFillups } from "../fillups/enrich-fillups"
 
 export type StatisticsDataType = Awaited<ReturnType<typeof GetStatisticsData>>
 
@@ -12,6 +12,11 @@ export const GetStatisticsData = async (id: string) => {
     })
 
     if (!vehicle) throw new Error("Vehicle not found")
+
+    const allFillups = await db.fillup.findMany({
+        where: { vehicle_id: vehicle.id },
+        orderBy: { date: "desc" }
+    })
 
     const allFillupsAggregate = await db.fillup.aggregate({
         _count: {
@@ -219,13 +224,13 @@ export const GetStatisticsData = async (id: string) => {
             : 0
 
     const distanceThisYear = fillupThisYear._count?.date > 1
-        ? (fillupThisYear._max.distance || 0) - (fillupThisYear._min.distance || 0)
+        ? (fillupThisYear._max.distance || 0) - (fillupLastYear._max.distance || 0)
         : fillupThisYear._count?.date === 1
             ? (fillupThisYear._min.distance || 0) - (await GetLastDistance(vehicle.id, startOfThisYear))
             : 0
 
     const distancePrevYear = fillupLastYear._count?.date > 1
-        ? (fillupLastYear._max.distance || 0) - (fillupLastYear._min.distance || 0)
+        ? (fillupLastYear._max.distance || 0) - (await GetLastDistance(vehicle.id, startOfPrevYear))
         : fillupLastYear._count?.date === 1
             ? (fillupLastYear._min.distance || 0) - (await GetLastDistance(vehicle.id, startOfPrevYear))
             : 0
@@ -243,7 +248,7 @@ export const GetStatisticsData = async (id: string) => {
         orderBy: { date: "desc" }
     })
 
-    const diffInDays = (firstFillup && lastFillup) ? differenceInDays(lastFillup?.date, firstFillup?.date) : 30
+    const diffInDays = (firstFillup && lastFillup) ? differenceInDays(endOfThisYear, firstFillup?.date) : 30
     const diffInMonths = (firstFillup && lastFillup) ? differenceInMonths(lastFillup?.date, firstFillup?.date) : 1
 
     const costDay = (allFillupsAggregate._sum.volume_price || 0) / diffInDays
@@ -252,9 +257,9 @@ export const GetStatisticsData = async (id: string) => {
     const avgDistanceDay = drivenDistance > 0 ? drivenDistance / diffInDays : 0
     const avgDistanceMonth = drivenDistance > 0 ? drivenDistance / diffInMonths : 0
 
-    const fillups = await getFillupsByVehicleId(vehicle.id)
+    const fillups = EnrichFillups(allFillups)
 
-    const distanceCostStats = calculateDistanceCostStats(fillups)
+    const distanceCostStats = CalculateDistanceCostStats(fillups)
 
     return {
         fuel: {
@@ -308,12 +313,12 @@ export const GetStatisticsData = async (id: string) => {
             total: drivenDistance,
             distances: {
                 last: allFillupsAggregate._max.distance || 0,
-                this_year: distanceThisYear, // FIXME: Niet helemaal correct
-                last_year: distancePrevYear, // FIXME: Niet helemaal correct
-                this_month: distancePrevMonth,
-                last_month: distanceThisMonth
+                this_year: distanceThisYear,
+                last_year: distancePrevYear,
+                this_month: distanceThisMonth,
+                last_month: distancePrevMonth
             },
-            avgDistanceDay, // FIXME: Niet helemaal correct
+            avgDistanceDay,
             avgDistanceMonth // FIXME: Niet helemaal correct
         }
     }
@@ -333,7 +338,7 @@ const GetLastDistance = async (vehicle_id: string, date: Date) => {
     return fillup?.distance || 0
 }
 
-const calculateDistanceCostStats = (fillups: FillupType) => {
+const CalculateDistanceCostStats = (fillups: EnrichedFillup[]) => {
     const data = fillups
         .filter((item) => item.full)
         .map((item) => item.distanceCost)

@@ -48,7 +48,6 @@ const app = new Hono()
 
             const {
                 vehicle_id,
-                remind_only,
                 category,
                 title,
                 cost,
@@ -56,17 +55,13 @@ const app = new Hono()
                 is_income,
                 repeat,
                 notes,
-                distance,
-                remind_distance,
-                remind_date,
-                repeat_distance,
-                repeat_months
+                distance
             } = c.req.valid("json")
 
             const vehicle = await db.costs.create({
                 data: {
                     vehicle_id,
-                    remind_only,
+                    remind_only: false,
                     category,
                     title,
                     cost,
@@ -74,11 +69,7 @@ const app = new Hono()
                     is_income,
                     repeat,
                     notes,
-                    distance,
-                    remind_distance,
-                    remind_date,
-                    repeat_distance,
-                    repeat_months
+                    distance
                 }
             })
 
@@ -97,7 +88,6 @@ const app = new Hono()
 
             const {
                 vehicle_id,
-                remind_only,
                 category,
                 title,
                 cost,
@@ -105,18 +95,14 @@ const app = new Hono()
                 is_income,
                 repeat,
                 notes,
-                distance,
-                remind_distance,
-                remind_date,
-                repeat_distance,
-                repeat_months
+                distance
             } = c.req.valid("json")
 
             const costs = await db.costs.update({
                 where: { id },
                 data: {
                     vehicle_id,
-                    remind_only,
+                    remind_only: false,
                     category,
                     title,
                     cost,
@@ -124,11 +110,7 @@ const app = new Hono()
                     is_income,
                     repeat,
                     notes,
-                    distance,
-                    remind_distance,
-                    remind_date,
-                    repeat_distance,
-                    repeat_months
+                    distance
                 }
             })
 

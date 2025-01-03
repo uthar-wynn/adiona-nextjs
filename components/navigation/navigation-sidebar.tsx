@@ -1,12 +1,13 @@
 "use client"
 
-import { VehicleButton } from "@/features/vehicles/components/vehicle-button";
+import { VehicleSelector } from "@/features/vehicles/components/vehicle-selector";
 import { CarFront, Coins, Fuel, LayoutDashboard, LineChart, List, MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Logo } from "../logo";
 import { Button, buttonVariants } from "../ui/button";
+import { Separator } from "../ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 
 const routes = [
@@ -39,7 +40,7 @@ const routes = [
         label: "Kosten",
         href: "/costs",
         icon: Coins
-    },
+    }
 ]
 
 export const NavigationSidebar = () => {
@@ -52,8 +53,9 @@ export const NavigationSidebar = () => {
                 <Logo />
             </div>
             <div className="p-2">
-                <VehicleButton />
+                <VehicleSelector />
             </div>
+            <Separator className="my-2" />
             <div className="flex flex-col p-2">
                 {routes.map((route, index) => (
                     <Link
@@ -92,13 +94,15 @@ export const MobileSidebar = () => {
                     >
                         <Logo />
                         <div className="p-1">
-                            <VehicleButton />
+                            <VehicleSelector />
                         </div>
+                        <Separator className="my-0.5" />
                         <div className="flex flex-col p-1">
                             {routes.map((route, index) => (
                                 <Link
                                     key={index}
                                     href={route.href}
+                                    onClick={() => setIsOpen(prev => !prev)}
                                     className={buttonVariants({
                                         variant: activeRoute.href === route.href ? "sidebarActiveItem" : "sidebarItem"
                                     })}

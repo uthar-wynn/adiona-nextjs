@@ -1,4 +1,4 @@
-import { FillupType } from "@/app/actions/fillups/getFillupsByVehicleId"
+import { EnrichedFillup } from "@/app/actions/fillups/enrich-fillups"
 import { ConfirmModal } from "@/components/modals/confirm-modal"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -10,7 +10,7 @@ import { useCallback } from "react"
 import { toast } from "sonner"
 
 interface FuelItemActionsProps {
-    fillup: FillupType[number]
+    fillup: EnrichedFillup
 }
 
 export const FuelItemActions = ({

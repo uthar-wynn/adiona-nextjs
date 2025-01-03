@@ -3,16 +3,16 @@
 import db from "@/lib/db"
 import { endOfMonth, startOfMonth, subMonths } from "date-fns"
 
-export type DashboardDataType = Awaited<ReturnType<typeof getDashboardData>>
+export type DashboardDataType = Awaited<ReturnType<typeof GetDashboardData>>
 
-export const getDashboardData = async (id: string) => {
+export const GetDashboardData = async (id: string) => {
     const vehicle = await db.vehicle.findUnique({
         where: { id }
     })
 
     const avgConcumption = await db.fillup.aggregate({
         _avg: { consumption: true },
-        where: { vehicle_id: id }
+        where: { vehicle_id: id, full: true }
     })
 
     const vehicleData = {
@@ -22,6 +22,15 @@ export const getDashboardData = async (id: string) => {
 
     const lastFillup = await db.fillup.findFirst({
         where: { vehicle_id: vehicle?.id },
+        orderBy: { date: "desc" }
+    })
+
+    // Previous log (compare)
+    const prevFillup = await db.fillup.findFirst({
+        where: {
+            vehicle_id: vehicle?.id,
+            date: { lt: lastFillup?.date }
+        },
         orderBy: { date: "desc" }
     })
 
@@ -90,6 +99,7 @@ export const getDashboardData = async (id: string) => {
     return {
         vehicle: vehicleData,
         lastFillup,
+        prevFillup,
         costs: {
             thisMonth: {
                 fuel: fillupThisMonth._sum.volume_price || 0,

@@ -1,4 +1,5 @@
 import { GraphDataType } from "@/app/actions/graphs/get-graph-data"
+import { CountUpWrapper } from "@/components/countup-wrapper"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
@@ -108,7 +109,11 @@ const TooltipRow = ({ label, value, bgColor, textColor }: {
                     {label}
                 </p>
                 <div className={cn("text-sm font-bold", textColor)}>
-                    {value} km
+                    <CountUpWrapper
+                        value={value}
+                        decimals={0}
+                    />&nbsp;
+                    km
                 </div>
             </div>
         </div>

@@ -1,6 +1,5 @@
 import { ConfirmModal } from "@/components/modals/confirm-modal"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useModal } from "@/hooks/use-modal-store"
@@ -8,47 +7,47 @@ import { cn } from "@/lib/utils"
 import { Vehicle } from "@prisma/client"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
-import { CarFront, MoreVertical, Pencil, ShuffleIcon, Trash2 } from "lucide-react"
+import { CarFront, MoreVertical, Pencil, Trash2 } from "lucide-react"
 import { useCallback } from "react"
 import { toast } from "sonner"
 
 export const VehicleCard = ({ vehicle }: { vehicle: Vehicle }) => {
     return (
-        <Card className="border border-separate shadow-sm rounded-lg overflow-hidden hover:shadow-md dark:shadow-primary/30 group/card">
+        <Card>
             <CardContent className="p-4 flex items-center justify-between h-[100px]">
-
-                <div className="flex items-center justify-end space-x-3">
-                    <div className={cn(
-                        "size-10 rounded-full flex items-center justify-center",
-                        vehicle.enabled ? "bg-emerald-500" : "bg-rose-500"
-                    )}>
-                        <CarFront className="size-5 text-white" />
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <div className="flex flex-col">
-                            <h3 className="text-base font-bold text-muted-foreground flex items-center">
-                                {vehicle.name}
-                            </h3>
-                            <p className="text-muted-foreground text-xs">
-                                {vehicle.description}
-                            </p>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-4 space-x-4">
+                    <div className="flex items-center justify-end space-x-3">
+                        <div className={cn(
+                            "size-10 rounded-full flex items-center justify-center",
+                            vehicle.enabled ? "bg-emerald-500" : "bg-rose-500"
+                        )}>
+                            <CarFront className="size-5 text-white" />
                         </div>
+                        <div className="flex items-center justify-between">
+                            <div className="flex flex-col">
+                                <h3 className="text-base font-bold text-muted-foreground flex items-center">
+                                    {vehicle.name}
+                                </h3>
+                                <p className="text-muted-foreground text-xs">
+                                    {vehicle.description}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex items-center">
                         {vehicle.plate && (
-                            <Badge>
+                            <Badge className="items-center justify-center border-2 border-separate border-red-500 text-red-500 bg-slate-200 w-[150px] h-10">
                                 {vehicle.plate}
                             </Badge>
                         )}
                     </div>
+                    <div className="hidden lg:flex items-center">
+                        <span className="text-muted-foreground lowercase">
+                            {vehicle.fuel_type}
+                        </span>
+                    </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                    <Button
-                        className="flex items-center gap-2"
-                        variant="outline"
-                        size="sm"
-                    >
-                        <ShuffleIcon size={16} />
-                        Edit
-                    </Button>
                     <VehicleActions
                         vehicle={vehicle}
                     />

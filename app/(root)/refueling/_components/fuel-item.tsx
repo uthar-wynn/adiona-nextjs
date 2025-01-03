@@ -1,4 +1,4 @@
-import { FillupType } from "@/app/actions/fillups/getFillupsByVehicleId"
+import { EnrichedFillup } from "@/app/actions/fillups/enrich-fillups"
 import { ActiveVehiclesType } from "@/app/actions/vehicles/getActiveVehicles"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
@@ -9,7 +9,7 @@ import { BadgeDollarSign, Droplet, Fuel, TrendingUp } from "lucide-react"
 import { FuelItemActions } from "./fuel-item-actions"
 
 interface FuelItemProps {
-    fillup: FillupType[number]
+    fillup: EnrichedFillup
     vehicle: ActiveVehiclesType[number]
 }
 

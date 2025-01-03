@@ -1,7 +1,7 @@
 import { StatisticsDataType } from "@/app/actions/statistics/get-data"
 import { Card, CardContent } from "@/components/ui/card"
 import { currencyFilter } from "@/lib/filters"
-import { BadgeDollarSignIcon, MoveRightIcon, TrendingUpIcon } from "lucide-react"
+import { BadgeDollarSignIcon, MoveRightIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react"
 
 export const StatsCosts = ({ data }: { data: StatisticsDataType }) => {
     return (
@@ -34,7 +34,17 @@ const TotalCard = ({ data }: { data: StatisticsDataType }) => {
                     <div className="grid grid-cols-2 gap-4 mt-4">
                         <div className="flex flex-col gap-2">
                             <div className="flex space-x-4 items-center">
-                                <TrendingUpIcon className="size-4 text-rose-600" />
+                                {data.cost.costs.this_year === data.cost.costs.last_year ? (
+                                    <MoveRightIcon className="size-4 text-neutral-600" />
+                                ) : (
+                                    <>
+                                        {data.cost.costs.this_year < data.cost.costs.last_year ? (
+                                            <TrendingDownIcon className="size-4 text-emerald-600" />
+                                        ) : (
+                                            <TrendingUpIcon className="size-4 text-rose-600" />
+                                        )}
+                                    </>
+                                )}
                                 <div className="flex flex-col">
                                     <span>
                                         {currencyFilter(data.cost.costs.this_year)}
@@ -54,7 +64,17 @@ const TotalCard = ({ data }: { data: StatisticsDataType }) => {
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="flex space-x-4 items-center">
-                                <MoveRightIcon className="size-4 text-neutral-600" />
+                                {data.cost.costs.this_month === data.cost.costs.last_month ? (
+                                    <MoveRightIcon className="size-4 text-neutral-600" />
+                                ) : (
+                                    <>
+                                        {data.cost.costs.this_month < data.cost.costs.last_month ? (
+                                            <TrendingDownIcon className="size-4 text-emerald-600" />
+                                        ) : (
+                                            <TrendingUpIcon className="size-4 text-rose-600" />
+                                        )}
+                                    </>
+                                )}
                                 <div className="flex flex-col">
                                     <span>
                                         {currencyFilter(data.cost.costs.this_month)}

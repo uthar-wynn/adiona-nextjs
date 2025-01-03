@@ -185,45 +185,47 @@ export const CreateFillupForm = ({
                                     </FormItem>
                                 )}
                             />
-                            <FormField
-                                control={form.control}
-                                name="unit_price"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>
-                                            Prijs/l
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                onChangeCapture={(e) => handlePriceChange()}
-                                                disabled={isPending}
-                                                placeholder="Prijs/l"
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="volume_price"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>
-                                            Totale kosten
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                disabled={isPending}
-                                                placeholder="Totale kosten"
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4">
+                                <FormField
+                                    control={form.control}
+                                    name="unit_price"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>
+                                                Prijs/l
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    onChangeCapture={(e) => handlePriceChange()}
+                                                    disabled={isPending}
+                                                    placeholder="Prijs/l"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="volume_price"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>
+                                                Totale kosten
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    disabled={isPending}
+                                                    placeholder="Totale kosten"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
                             <div className="grid grid-cols-1 lg:grid-cols-2">
                                 <FormField
                                     control={form.control}
@@ -255,6 +257,10 @@ export const CreateFillupForm = ({
                                                 <PopoverContent className="w-auto p-0" align="start">
                                                     <Calendar
                                                         mode="single"
+                                                        captionLayout="dropdown-buttons"
+                                                        fromYear={2001}
+                                                        toYear={2100}
+                                                        defaultMonth={field.value}
                                                         selected={field.value}
                                                         onSelect={field.onChange}
                                                     />

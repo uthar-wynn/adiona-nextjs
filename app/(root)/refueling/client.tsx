@@ -1,6 +1,6 @@
 "use client"
 
-import getFillupsByVehicleId, { FillupType } from "@/app/actions/fillups/getFillupsByVehicleId"
+import GetFillupsByVehicleId, { FillupType } from "@/app/actions/fillups/getFillupsByVehicleId"
 import EmptyState from "@/components/EmptyState"
 import { PageError } from "@/components/page-error"
 import { PageLoader } from "@/components/page-loader"
@@ -18,7 +18,7 @@ const RefuelingClient = () => {
 
     const { data, isFetching } = useQuery<FillupType>({
         queryKey: ["fillups", selectedVehicle?.id],
-        queryFn: () => getFillupsByVehicleId(selectedVehicle!.id),
+        queryFn: () => GetFillupsByVehicleId(selectedVehicle!.id),
         enabled: !!selectedVehicle
     })
 
@@ -53,12 +53,22 @@ const RefuelingClient = () => {
             </div>
             <Separator className="my-4" />
             <div className="h-full space-y-4">
-                {data.map((item) => (
-                    <FuelItem
-                        key={item.id}
-                        vehicle={selectedVehicle}
-                        fillup={item}
-                    />
+                {Object.keys(data).map((month) => (
+                    <div
+                        key={month}
+                        className="space-y-3"
+                    >
+                        <span className="text-lg font-semibold text-muted-foreground">
+                            {month}
+                        </span>
+                        {data[month].map((fillup) => (
+                            <FuelItem
+                                key={fillup.id}
+                                vehicle={selectedVehicle}
+                                fillup={fillup}
+                            />
+                        ))}
+                    </div>
                 ))}
             </div>
         </div>

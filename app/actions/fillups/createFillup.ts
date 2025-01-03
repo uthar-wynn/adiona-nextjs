@@ -37,10 +37,9 @@ export default async function CreateFillup({ data }: { data: fillupSchemaType })
         } else if (counter === "Kilometerteller") {
             if (lastDistanceValue === 0) {
                 calculatedConsumption = 0
-            } else {
-                calculatedConsumption = (fuel / lastDistanceValue) * 100
                 newFullValue = false
-            }
+            } else
+                calculatedConsumption = (fuel / lastDistanceValue) * 100
         }
 
         const fillup = await db.fillup.create({

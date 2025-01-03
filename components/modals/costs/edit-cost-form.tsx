@@ -3,16 +3,15 @@
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Separator } from "@/components/ui/separator"
 import { costSchema, costSchemaType } from "@/features/costs/schemas"
 import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Costs } from "@prisma/client"
-import { Separator } from "@radix-ui/react-select"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 import { format } from "date-fns"
@@ -37,7 +36,6 @@ export const EditCostForm = ({
         resolver: zodResolver(costSchema),
         defaultValues: {
             vehicle_id: initialValues.vehicle_id,
-            remind_only: false,
             category: "dienst",
             title: "",
             cost: undefined,
@@ -45,11 +43,7 @@ export const EditCostForm = ({
             is_income: false,
             repeat: "once",
             notes: "",
-            distance: undefined,
-            remind_distance: undefined,
-            remind_date: undefined,
-            repeat_distance: undefined,
-            repeat_months: undefined,
+            distance: undefined
         }
     })
 
@@ -57,19 +51,13 @@ export const EditCostForm = ({
         if (initialValues)
             form.reset({
                 vehicle_id: initialValues.vehicle_id,
-                remind_only: initialValues.remind_only,
                 category: initialValues.category,
                 title: initialValues.title,
                 cost: initialValues.cost || 0,
                 date: new Date(initialValues.date!),
                 is_income: initialValues.is_income,
                 repeat: initialValues.repeat,
-                notes: initialValues.notes || "",
-                distance: initialValues.distance || undefined,
-                remind_distance: initialValues.remind_distance || undefined,
-                remind_date: initialValues.remind_date || undefined,
-                repeat_distance: initialValues.repeat_distance || undefined,
-                repeat_months: initialValues.repeat_months || undefined,
+                notes: initialValues.notes || ""
             })
 
     }, [form, initialValues])
@@ -111,11 +99,6 @@ export const EditCostForm = ({
                             onSubmit={form.handleSubmit(onSubmit)}
                             className="space-y-8"
                         >
-                            {Object.keys(form.formState.errors).length > 0 && (
-                                <pre>
-                                    {JSON.stringify(form.formState.errors, null, 2)}
-                                </pre>
-                            )}
                             <FormField
                                 control={form.control}
                                 name="category"
@@ -151,27 +134,6 @@ export const EditCostForm = ({
                                 )}
                             />
                             <Separator />
-                            <FormField
-                                control={form.control}
-                                name="remind_only"
-                                render={({ field }) => (
-                                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                                        <FormControl>
-                                            <Checkbox
-                                                checked={field.value}
-                                                onCheckedChange={field.onChange}
-                                            />
-                                        </FormControl>
-                                        <div className="space-y-1 leading-none">
-                                            <FormLabel>
-                                                Herinnering
-                                            </FormLabel>
-                                        </div>
-
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
                             <FormField
                                 control={form.control}
                                 name="title"

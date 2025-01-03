@@ -1,6 +1,6 @@
 import { GraphDataType } from "@/app/actions/graphs/get-graph-data"
+import { CountUpWrapper } from "@/components/countup-wrapper"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { numberFormatter } from "@/lib/filters"
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 import { FuelIcon } from "lucide-react"
@@ -111,7 +111,10 @@ const TooltipRow = ({ label, value, bgColor, textColor }: {
                     {label}
                 </p>
                 <div className={cn("text-sm font-bold", textColor)}>
-                    {numberFormatter(value)}&nbsp;
+                    <CountUpWrapper
+                        value={value}
+                        decimals={2}
+                    />
                     <span>
                         l/100 km
                     </span>

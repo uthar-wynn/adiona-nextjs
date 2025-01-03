@@ -4,8 +4,7 @@ import { ActiveVehiclesType } from "@/app/actions/vehicles/getActiveVehicles"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -37,7 +36,6 @@ export const CreateCostForm = ({
         resolver: zodResolver(costSchema),
         defaultValues: {
             vehicle_id: selectedVehicle.id,
-            remind_only: false,
             category: "dienst",
             title: "",
             cost: undefined,
@@ -45,11 +43,7 @@ export const CreateCostForm = ({
             is_income: false,
             repeat: "once",
             notes: "",
-            distance: undefined,
-            remind_distance: undefined,
-            remind_date: undefined,
-            repeat_distance: undefined,
-            repeat_months: undefined,
+            distance: undefined
         }
     })
 
@@ -125,27 +119,6 @@ export const CreateCostForm = ({
                                 )}
                             />
                             <Separator />
-                            <FormField
-                                control={form.control}
-                                name="remind_only"
-                                render={({ field }) => (
-                                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                                        <FormControl>
-                                            <Checkbox
-                                                checked={field.value}
-                                                onCheckedChange={field.onChange}
-                                            />
-                                        </FormControl>
-                                        <div className="space-y-1 leading-none">
-                                            <FormLabel>
-                                                Herinnering
-                                            </FormLabel>
-                                        </div>
-
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
                             <FormField
                                 control={form.control}
                                 name="title"
@@ -298,7 +271,6 @@ export const CreateCostForm = ({
                                     </FormItem>
                                 )}
                             />
-                            <Separator />
                             <Button
                                 size="lg"
                                 className="w-full"

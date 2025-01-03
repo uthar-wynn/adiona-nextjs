@@ -2,13 +2,12 @@ import { ActiveVehiclesType } from "@/app/actions/vehicles/getActiveVehicles"
 import { Costs, Fillup, Vehicle } from "@prisma/client"
 import { create } from "zustand"
 
-export type ModalType = "createVehicle" | "editVehicle" | "search" | "createFillup" | "editFillup" | "createCost" | "editCost"
+export type ModalType = "createVehicle" | "editVehicle" | "createFillup" | "editFillup" | "createCost" | "editCost"
 
 interface ModalData {
     vehicle?: Vehicle
     vehicles?: Vehicle[]
     fillup?: Fillup
-    lastFillup?: Fillup
     selectedVehicle?: ActiveVehiclesType[number]
     cost?: Costs
 }
