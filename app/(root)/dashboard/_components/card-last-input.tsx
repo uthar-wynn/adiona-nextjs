@@ -15,7 +15,7 @@ export const CardLastInput = ({ data }: { data: DashboardDataType }) => {
             <Card className="min-w-[400px]">
                 <CardContent className="p-4">
                     <div className="flex flex-col gap-2">
-                        {data.test.map((log) => (
+                        {data.lastLogs.map((log) => (
                             <div key={log.id} className="flex items-center justify-between">
                                 <span className="flex items-center space-x-2">
                                     {log.type === "FILLUP" ? (

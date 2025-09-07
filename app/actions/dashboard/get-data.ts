@@ -89,13 +89,6 @@ export const GetDashboardData = async (id: string) => {
         }
     })
 
-    // Last fuel logs
-    const lastLogs = await db.fillup.findMany({
-        take: 7,
-        where: { vehicle_id: id },
-        orderBy: { date: "desc" }
-    })
-
     type DashboardLog = {
         type: "FILLUP" | "COST",
         id: string,
@@ -133,7 +126,8 @@ export const GetDashboardData = async (id: string) => {
         cost: c.cost ?? 0
     }))
 
-    const test: DashboardLog[] = [...fillupLogs, ...costLogs]
+    // Last fuel logs
+    const lastLogs: DashboardLog[] = [...fillupLogs, ...costLogs]
         .sort((a, b) => b.date?.getTime() - a.date?.getTime())
         .slice(0, 7)
 
@@ -151,7 +145,6 @@ export const GetDashboardData = async (id: string) => {
                 costs: costsPrevMonth._sum.cost || 0
             }
         },
-        lastLogs,
-        test
+        lastLogs
     }
 }
