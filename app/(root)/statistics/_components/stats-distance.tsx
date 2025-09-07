@@ -1,6 +1,6 @@
 import { StatisticsDataType } from "@/app/actions/statistics/get-data"
 import { Card, CardContent } from "@/components/ui/card"
-import { numberFormatter } from "@/lib/filters"
+import { digitFormatter, numberFormatter } from "@/lib/filters"
 import { CarFrontIcon, GaugeCircleIcon } from "lucide-react"
 
 export const StatsDistance = ({ data }: { data: StatisticsDataType }) => {
@@ -25,7 +25,7 @@ const TotalCard = ({ data }: { data: StatisticsDataType }) => {
                         Afgelegde afstand met Adiona
                     </span>
                     <h2 className="text-2xl font-bold">
-                        {data.distance.total} km
+                        {digitFormatter(data.distance.total, 0)} km
                     </h2>
                 </div>
             </CardContent>
@@ -42,7 +42,7 @@ const LastDistanceCard = ({ data }: { data: StatisticsDataType }) => {
                         Laatste kilometerstand
                     </span>
                     <h2 className="text-2xl font-bold">
-                        {data.distance.distances.last} km
+                        {digitFormatter(data.distance.distances.last, 0)} km
                     </h2>
                     <div className="grid grid-cols-2 gap-4 mt-4">
                         <div className="flex flex-col gap-2">
@@ -50,7 +50,7 @@ const LastDistanceCard = ({ data }: { data: StatisticsDataType }) => {
                                 <GaugeCircleIcon className="size-4 text-cyan-600" />
                                 <div className="flex flex-col">
                                     <span>
-                                        {data.distance.distances.this_year} km
+                                        {digitFormatter(data.distance.distances.this_year, 0)} km
                                     </span>
                                     <span className="text-sm text-muted-foreground">
                                         Dit jaar
@@ -61,7 +61,7 @@ const LastDistanceCard = ({ data }: { data: StatisticsDataType }) => {
                                 <div className="size-4" />
                                 <div className="flex flex-col">
                                     <span>
-                                        {data.distance.distances.last_year} km
+                                        {digitFormatter(data.distance.distances.last_year, 0)} km
                                     </span>
                                     <span className="text-sm text-muted-foreground">
                                         Vorig jaar
@@ -74,7 +74,7 @@ const LastDistanceCard = ({ data }: { data: StatisticsDataType }) => {
                                 <GaugeCircleIcon className="size-4 text-cyan-600" />
                                 <div className="flex flex-col">
                                     <span>
-                                        {data.distance.distances.this_month} km
+                                        {digitFormatter(data.distance.distances.this_month, 0)} km
                                     </span>
                                     <span className="text-sm text-muted-foreground">
                                         Deze maand
@@ -85,7 +85,7 @@ const LastDistanceCard = ({ data }: { data: StatisticsDataType }) => {
                                 <div className="size-4" />
                                 <div className="flex flex-col">
                                     <span>
-                                        {data.distance.distances.last_month} km
+                                        {digitFormatter(data.distance.distances.last_month, 0)} km
                                     </span>
                                     <span className="text-sm text-muted-foreground">
                                         Vorige maand

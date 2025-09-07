@@ -65,7 +65,7 @@ export const FuelItem = ({
                             <>
                                 <div className="flex space-x-2 items-center">
                                     <TrendingUp className="size-4 text-cyan-600" />
-                                    <span className={cn(
+                                    <span className={cn("font-bold",
                                         fillup.consumption < vehicle.avgConcumption && "text-green-600"
                                     )}>
                                         l/100km: {fillup.consumption.toFixed(2)}

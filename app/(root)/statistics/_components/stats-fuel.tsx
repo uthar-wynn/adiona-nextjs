@@ -1,7 +1,7 @@
 import { StatisticsDataType } from "@/app/actions/statistics/get-data"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { numberFormatter } from "@/lib/filters"
+import { digitFormatter, numberFormatter } from "@/lib/filters"
 import { ArrowDownToLine, ArrowUpToLine, DropletIcon, FuelIcon } from "lucide-react"
 
 export const StatsFuel = ({ data }: { data: StatisticsDataType }) => {
@@ -88,7 +88,7 @@ const FuelCard = ({ data }: { data: StatisticsDataType }) => {
                         Brandstof
                     </span>
                     <h2 className="text-2xl font-bold">
-                        {numberFormatter(data.fuel.fuel.sum)} l
+                        {digitFormatter(data.fuel.fuel.sum)} l
                     </h2>
                     <div className="grid grid-cols-2 gap-4 mt-4">
                         <div className="flex flex-col gap-2">
@@ -105,7 +105,7 @@ const FuelCard = ({ data }: { data: StatisticsDataType }) => {
                                 <div className="size-4" />
                                 <div className="flex flex-col">
                                     <span>
-                                        {numberFormatter(data.fuel.fuel.last_year)} l
+                                        {digitFormatter(data.fuel.fuel.last_year)} l
                                     </span>
                                     <span className="text-sm text-muted-foreground">Vorig jaar</span>
                                 </div>

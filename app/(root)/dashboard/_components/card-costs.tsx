@@ -1,5 +1,6 @@
 import { DashboardDataType } from "@/app/actions/dashboard/get-data"
 import { badgeVariants } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { currencyFilter } from "@/lib/filters"
 import { BadgeDollarSign, FuelIcon, TicketIcon } from "lucide-react"
@@ -8,13 +9,15 @@ import Link from "next/link"
 export const CardCosts = ({ data }: { data: DashboardDataType }) => {
     return (
         <div className="flex flex-col gap-4">
-            <Link
-                href="/costs"
-                className={badgeVariants({ variant: "outline" })}
-            >
-                <BadgeDollarSign className="size-4 mr-1 text-cyan-600" />
-                Kosten
-            </Link>
+            <Button variant="outline" asChild>
+                <Link
+                    href="/costs"
+                    className={badgeVariants({ variant: "outline" })}
+                >
+                    <BadgeDollarSign className="size-4 mr-1 text-cyan-600" />
+                    Kosten
+                </Link>
+            </Button>
             <Card className="min-w-[400px]">
                 <CardContent className="p-4">
                     <div className="flex flex-col gap-2">

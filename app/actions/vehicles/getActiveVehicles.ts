@@ -24,7 +24,10 @@ export default async function getActiveVehicles() {
         vehicles.map(async (vehicle) => {
             const avgConcumption = await db.fillup.aggregate({
                 _avg: { consumption: true },
-                where: { vehicle_id: vehicle.id }
+                where: {
+                    vehicle_id: vehicle.id,
+                    full: true
+                }
             })
 
             const lastFillup = await db.fillup.findFirst({

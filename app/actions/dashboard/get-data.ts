@@ -10,14 +10,14 @@ export const GetDashboardData = async (id: string) => {
         where: { id }
     })
 
-    const avgConcumption = await db.fillup.aggregate({
+    const avgConsumption = await db.fillup.aggregate({
         _avg: { consumption: true },
         where: { vehicle_id: id, full: true }
     })
 
     const vehicleData = {
         ...vehicle,
-        avgConcumption: avgConcumption._avg.consumption || 0
+        avgConcumption: avgConsumption._avg.consumption || 0
     }
 
     const lastFillup = await db.fillup.findFirst({
@@ -96,6 +96,47 @@ export const GetDashboardData = async (id: string) => {
         orderBy: { date: "desc" }
     })
 
+    type DashboardLog = {
+        type: "FILLUP" | "COST",
+        id: string,
+        title: string,
+        date: Date,
+        cost: number | 0
+    }
+
+    const [fillupsRaw, costsRaw] = await Promise.all([
+        db.fillup.findMany({
+            take: 7,
+            where: { vehicle_id: id },
+            orderBy: { date: "desc" }
+        }),
+        db.costs.findMany({
+            take: 7,
+            where: { vehicle_id: id },
+            orderBy: { date: "desc" }
+        })
+    ])
+
+    const fillupLogs = fillupsRaw.map((f) => ({
+        type: "FILLUP" as const,
+        id: f.id,
+        title: "Voltanken",
+        date: f.date ?? new Date(0),
+        cost: f.volume_price ?? 0
+    }))
+
+    const costLogs = costsRaw.map((c) => ({
+        type: "COST" as const,
+        id: c.id,
+        title: c.title,
+        date: c.date ?? new Date(0),
+        cost: c.cost ?? 0
+    }))
+
+    const test: DashboardLog[] = [...fillupLogs, ...costLogs]
+        .sort((a, b) => b.date?.getTime() - a.date?.getTime())
+        .slice(0, 7)
+
     return {
         vehicle: vehicleData,
         lastFillup,
@@ -110,6 +151,7 @@ export const GetDashboardData = async (id: string) => {
                 costs: costsPrevMonth._sum.cost || 0
             }
         },
-        lastLogs
+        lastLogs,
+        test
     }
 }

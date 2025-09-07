@@ -1,7 +1,7 @@
 import { StatisticsDataType } from "@/app/actions/statistics/get-data"
 import { Card, CardContent } from "@/components/ui/card"
 import { currencyFilter } from "@/lib/filters"
-import { BadgeDollarSignIcon, MoveRightIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react"
+import { BadgeDollarSignIcon, FuelIcon, MoveRightIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react"
 
 export const StatsCosts = ({ data }: { data: StatisticsDataType }) => {
     return (
@@ -147,7 +147,7 @@ const FuelPriceCard = ({ data }: { data: StatisticsDataType }) => {
                     </span>
                     <div className="flex flex-col gap-2">
                         <div className="flex space-x-4 items-center">
-                            <BadgeDollarSignIcon className="size-4 text-emerald-600" />
+                            <FuelIcon className="size-4 text-emerald-600" />
                             <div className="flex flex-col">
                                 <span>
                                     {currencyFilter(data.cost.fuel_price.min, 3)}
@@ -158,7 +158,7 @@ const FuelPriceCard = ({ data }: { data: StatisticsDataType }) => {
                             </div>
                         </div>
                         <div className="flex space-x-5 items-center">
-                            <BadgeDollarSignIcon className="size-4 text-rose-600" />
+                            <FuelIcon className="size-4 text-rose-600" />
                             <div className="flex flex-col">
                                 <span>
                                     {currencyFilter(data.cost.fuel_price.max, 3)}
@@ -184,14 +184,14 @@ const AverageCostCard = ({ data }: { data: StatisticsDataType }) => {
                         Gemiddelde kosten per kilometer
                     </span>
                     <h2 className="text-2xl font-bold">
-                        {currencyFilter(data.cost.avg_cost.total, 3)}
+                        {currencyFilter(data.cost.avg_cost.total, 3)} /km
                     </h2>
                     <div className="grid grid-cols-2 items gap-4 mt-4">
                         <div className="flex space-x-4 items-center">
                             <BadgeDollarSignIcon className="size-4 text-emerald-600" />
                             <div className="flex flex-col">
                                 <span>
-                                    {currencyFilter(data.cost.avg_cost.min, 3)}
+                                    {currencyFilter(data.cost.avg_cost.min, 3)} /km
                                 </span>
                                 <span className="text-sm text-muted-foreground">
                                     Laagste kosten per kilometer
@@ -202,7 +202,7 @@ const AverageCostCard = ({ data }: { data: StatisticsDataType }) => {
                             <BadgeDollarSignIcon className="size-4 text-rose-600" />
                             <div className="flex flex-col">
                                 <span>
-                                    {currencyFilter(data.cost.avg_cost.max, 3)}
+                                    {currencyFilter(data.cost.avg_cost.max, 3)} /km
                                 </span>
                                 <span className="text-sm text-muted-foreground">
                                     Ongunstigste kosten per kilometer

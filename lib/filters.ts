@@ -15,6 +15,14 @@ export function numberFormatter(value: number): string {
     return value.toFixed(2)
 }
 
+export function digitFormatter(value: number, digits: number = 2): string {
+    return new Intl.NumberFormat("nl-BE", {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits,
+        useGrouping: true
+    }).format(value)
+}
+
 export function integerAwareFormatter(value: number): string {
     return Number.isInteger(value) ? value.toFixed(0) : value.toFixed(2)
 }
