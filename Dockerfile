@@ -41,7 +41,7 @@ RUN npm run build
 
 
 # ========== Stage 3: Runner (standalone) ==========
-FROM node:22-slim AS runner
+FROM base AS runner
 
 WORKDIR /app
 
@@ -55,6 +55,9 @@ COPY --from=builder /app/.next/standalone ./
 
 # Statische assets
 COPY --from=builder /app/.next/static ./.next/static
+
+# Prisma schema meenemen voor init-prisma
+COPY --from=builder /app/prisma ./prisma
 
 EXPOSE 3000
 
