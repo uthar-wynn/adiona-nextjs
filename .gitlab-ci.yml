@@ -1,0 +1,21 @@
+stages:
+  - build
+
+variables:
+  DOCKER_IMAGE: "$DOCKERHUB_USERNAME/adiona"
+  DOCKER_DRIVER: overlay2
+
+build_and_push:
+  stage: build
+  tags:
+    - docker
+    - k3s
+  image: docker:27
+  script:
+    - echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+    - docker version
+    - docker info
+    - docker buildx inspect default || docker buildx create --use
+    - docker buildx build --platform linux/arm64 --build-arg NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY" -t "$DOCKER_IMAGE:latest" -t "$DOCKER_IMAGE:$CI_PIPELINE_IID" --push .
+  only:
+    - main

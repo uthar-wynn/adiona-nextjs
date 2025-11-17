@@ -1,44 +1,62 @@
-# Stage 1: Build the application
-FROM node:22-alpine AS builder
+# ========== Base image ==========
+FROM node:22-slim AS base
 
 WORKDIR /app
 
-RUN apk add --no-cache openssl
+# Algemene deps nodig voor Node/Prisma
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends openssl \
+  && rm -rf /var/lib/apt/lists/*
 
-# Install dependencies
+
+# ========== Stage 1: Dependencies (dev + prod, voor build) ==========
+FROM base AS deps
+
 COPY package*.json ./
-RUN npm install --frozen-lockfile
+RUN npm ci
 
-# Copy application code
+
+# ========== Stage 2: Builder (Next.js standalone + Prisma) ==========
+FROM base AS builder
+
+WORKDIR /app
+
+# Build-time env (Clerk)
+ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+ENV NODE_ENV=production
+
+# Alle deps (incl. dev) voor de build
+COPY --from=deps /app/node_modules ./node_modules
+
+# App code
 COPY . .
 
-# Generate Prisma Client
+# Prisma client genereren (voor de build)
 RUN npx prisma generate
 
-# Build the Next.js application
+# Next.js build -> gebruikt output: "standalone"
 RUN npm run build
 
-# Stage 2: Run the application
-FROM node:22-alpine AS runner
+
+# ========== Stage 3: Runner (standalone) ==========
+FROM node:22-slim AS runner
 
 WORKDIR /app
 
-# Install necessary dependencies
-RUN apk add --no-cache libc6-compat openssl
+ENV NODE_ENV=production
 
-# Copy built files and node_modules from builder stage
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/prisma ./prisma
+# Public assets
 COPY --from=builder /app/public ./public
 
-# Set environment variables
-ENV NODE_ENV production
-ENV PRISMA_CLI_QUERY_ENGINE_LIBRARY openssl-1.1.x
+# Standalone bundle + minimale node_modules
+COPY --from=builder /app/.next/standalone ./
 
-# Expose the port the app runs on
+# Statische assets
+COPY --from=builder /app/.next/static ./.next/static
+
 EXPOSE 3000
 
-# Run the entrypoint script
-ENTRYPOINT ["npm", "start"]
+# Next.js standalone entrypoint
+CMD ["node", "server.js"]
