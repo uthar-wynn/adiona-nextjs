@@ -12,17 +12,17 @@ export const CardFuel = ({ data }: { data: DashboardDataType }) => {
     const prev = data.prevFillup?.unit_price || 0
 
     return (
-        <div className="grid grid-cols-1 gap-4">
+        <div className="flex flex-col gap-4">
             <Button variant="outline" asChild>
                 <Link
                     href="/refueling"
                     className={badgeVariants({ variant: "outline" })}
                 >
-                    <FuelIcon className="size-4 mr-1 text-cyan-600" />
+                    <FuelIcon className="size-4 mr-2 text-cyan-600" />
                     Brandstof
                 </Link>
             </Button>
-            <Card className="min-w-[400px]">
+            <Card className="w-full">
                 <CardContent className="p-4">
                     <div className="flex flex-col gap-2">
                         <span className="lowercase text-muted-foreground">
@@ -31,7 +31,7 @@ export const CardFuel = ({ data }: { data: DashboardDataType }) => {
                         <div className="flex items-center justify-between">
                             <span className="flex items-center space-x-2">
                                 <Droplet className="mr-2 size-4 text-cyan-600" />
-                                {numberFormatter(data.vehicle?.avgConcumption || 0)}
+                                {numberFormatter(data.vehicle?.avgConsumption || 0)}
                                 <p className="text-muted-foreground">l/100km</p>
                             </span>
                             <span className="text-right text-muted-foreground">
@@ -40,7 +40,7 @@ export const CardFuel = ({ data }: { data: DashboardDataType }) => {
                         </div>
                         <div className="flex items-center justify-between">
                             <span className="flex items-center space-x-2">
-                                {((data.vehicle?.avgConcumption || 0) < (data.lastFillup?.consumption || 0)) ? (
+                                {((data.vehicle?.avgConsumption || 0) < (data.lastFillup?.consumption || 0)) ? (
                                     <TrendingUpIcon className="mr-2 size-4 text-rose-600" />
                                 ) : (
                                     <TrendingDownIcon className="mr-2 size-4 text-emerald-600" />
@@ -71,7 +71,7 @@ export const CardFuel = ({ data }: { data: DashboardDataType }) => {
                             {data.lastFillup?.date && (
                                 <span className="text-sm text-muted-foreground">
                                     {format(data.lastFillup?.date, "dd-MM-yyyy")} ·&nbsp;
-                                    {differenceInDays(new Date(), data.lastFillup?.date!)} dagen geleden
+                                    {differenceInDays(new Date(), data.lastFillup?.date)} dagen geleden
                                 </span>
                             )}
                         </div>

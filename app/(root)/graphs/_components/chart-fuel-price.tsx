@@ -22,40 +22,48 @@ export const ChartFuelPrice = ({ data }: { data: GraphDataType }) => {
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
                 {dataAvailable ? (
-                    <ResponsiveContainer width={"100%"} height={300}>
-                        <LineChart
-                            height={300} data={fillups}
-                        >
-                            <XAxis
-                                dataKey="date"
-                                tickLine={false}
-                                axisLine={false}
-                                tickMargin={8}
-                                tickFormatter={(value) => format(value, "dd MMM yy")}
-                            />
-                            <YAxis
-                                stroke="#888888"
-                                fontSize={12}
-                                tickLine={false}
-                                axisLine={false}
-                                label={{
-                                    value: "€ per liter",
-                                    angle: -90,
-                                    position: "insideLeft",
-                                    fill: "#888888"
-                                }}
-                            />
-                            <CartesianGrid vertical={false} strokeDasharray="5 5" />
-                            <Tooltip content={<CustomTooltip />} />
-                            <Line
-                                dataKey="unit_price"
-                                type="monotone"
-                                stroke="#10b981"
-                                strokeWidth={2}
-                                dot={false}
-                            />
-                        </LineChart>
-                    </ResponsiveContainer>
+                    <div className="w-full overflow-x-auto">
+                        <div className="min-w-[600px]">
+                            <ResponsiveContainer width={"100%"} height={300}>
+                                <LineChart
+                                    height={300} data={fillups}
+                                >
+                                    <XAxis
+                                        dataKey="date"
+                                        tickLine={false}
+                                        axisLine={false}
+                                        tickMargin={8}
+                                        tickFormatter={(value) => format(value, "dd MMM yy")}
+                                    />
+                                    <YAxis
+                                        stroke="#888888"
+                                        fontSize={12}
+                                        tickLine={false}
+                                        axisLine={false}
+                                        domain={[
+                                            (dataMin: number) => Math.floor(dataMin / 0.5) * 0.5,
+                                            (dataMax: number) => Math.ceil(dataMax / 0.5) * 0.5
+                                        ]}
+                                        label={{
+                                            value: "€ per liter",
+                                            angle: -90,
+                                            position: "insideLeft",
+                                            fill: "#888888"
+                                        }}
+                                    />
+                                    <CartesianGrid vertical={false} strokeDasharray="5 5" />
+                                    <Tooltip content={<CustomTooltip />} />
+                                    <Line
+                                        dataKey="unit_price"
+                                        type="linear"
+                                        stroke="#10b981"
+                                        strokeWidth={2}
+                                        dot={false}
+                                    />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
                 ) : (
                     <div>
                         <Card className="flex h-[300px] flex-col items-center justify-center bg-background">

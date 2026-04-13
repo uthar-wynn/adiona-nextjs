@@ -17,11 +17,11 @@ export const Logo = (
         <Link
             href="/"
             className={cn(
-                "text-2xl font-extrabold flex items-center gap-2",
+                "text-2xl font-extrabold flex items-center space-x-2",
                 fontSize
             )}
         >
-            <div className="rounded-xl bg-gradient-to-r from-neutral-500 to-neutral-600 p-2">
+            <div className="rounded-2xl bg-gradient-to-r from-neutral-500 to-neutral-600 p-2 group-data-[collapsible=icon]:[&>svg]:size-3">
                 <FuelIcon size={iconSize} className="text-white" />
             </div>
             <div>

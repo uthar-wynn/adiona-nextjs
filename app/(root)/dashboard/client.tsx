@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CardCosts } from "./_components/card-costs";
 import { CardFuel } from "./_components/card-fuel";
 import { CardLastInput } from "./_components/card-last-input";
+import { CardGraphs } from "./_components/graphs";
 
 const DashboardClient = () => {
     const { selectedVehicle } = useVehicles()
@@ -35,12 +36,15 @@ const DashboardClient = () => {
                     Dashboard
                 </h1>
             </div>
-            <div className="h-full py-6 flex flex-col gap-4 items-center">
+            <div className="mx-auto h-full w-full gap-4 py-6 flex flex-col md:max-w-[600px]">
                 <CardFuel
                     data={data}
                 />
                 <CardCosts
                     data={data}
+                />
+                <CardGraphs
+                    data={data.graphs}
                 />
                 <CardLastInput
                     data={data}

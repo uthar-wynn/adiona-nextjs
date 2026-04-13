@@ -7,50 +7,50 @@ import { cn } from "@/lib/utils"
 import { Vehicle } from "@prisma/client"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
-import { CarFront, MoreVertical, Pencil, Trash2 } from "lucide-react"
+import { CarFrontIcon, MoreVertical, PencilIcon, Trash2Icon } from "lucide-react"
 import { useCallback } from "react"
 import { toast } from "sonner"
 
 export const VehicleCard = ({ vehicle }: { vehicle: Vehicle }) => {
     return (
         <Card>
-            <CardContent className="p-4 flex items-center justify-between h-[100px]">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-4 space-x-4">
-                    <div className="flex items-center justify-end space-x-3">
-                        <div className={cn(
-                            "size-10 rounded-full flex items-center justify-center",
-                            vehicle.enabled ? "bg-emerald-500" : "bg-rose-500"
-                        )}>
-                            <CarFront className="size-5 text-white" />
+            <CardContent className="p-4 relative pr-12">
+                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                    <div className="flex min-w-0 items-center gap-3">
+                        <div
+                            className={cn(
+                                "flex size-10 shrink-0 items-center justify-center rounded-full",
+                                vehicle.enabled ? "bg-emerald-500" : "bg-rose-500"
+                            )}
+                        >
+                            <CarFrontIcon className="size-5 text-white" />
                         </div>
-                        <div className="flex items-center justify-between">
-                            <div className="flex flex-col">
-                                <h3 className="text-base font-bold text-muted-foreground flex items-center">
-                                    {vehicle.name}
-                                </h3>
-                                <p className="text-muted-foreground text-xs">
-                                    {vehicle.description}
-                                </p>
-                            </div>
+
+                        <div className="min-w-0">
+                            <h3 className="truncate text-base font-semibold">
+                                {vehicle.name}
+                            </h3>
+                            <p className="truncate text-xs text-muted-foreground">
+                                {vehicle.description || "—"}
+                            </p>
                         </div>
                     </div>
-                    <div className="flex items-center">
+
+                    <div className="flex flex-wrap items-center gap-3 md:justify-end">
                         {vehicle.plate && (
-                            <Badge className="items-center justify-center border-2 border-separate border-red-500 text-red-500 bg-slate-200 w-[150px] h-10">
+                            <Badge className="flex h-10 min-w-[100px] items-center justify-center rounded-full border-2 border-red-500 bg-slate-200 text-red-500">
                                 {vehicle.plate}
                             </Badge>
                         )}
-                    </div>
-                    <div className="hidden lg:flex items-center">
-                        <span className="text-muted-foreground lowercase">
+
+                        <span className="text-sm lowercase text-muted-foreground">
                             {vehicle.fuel_type}
                         </span>
+
                     </div>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <VehicleActions
-                        vehicle={vehicle}
-                    />
+                    <div className="absolute right-4 top-4">
+                        <VehicleActions vehicle={vehicle} />
+                    </div>
                 </div>
             </CardContent>
         </Card>
@@ -92,14 +92,14 @@ const VehicleActions = ({ vehicle }: { vehicle: Vehicle }) => {
             <DropdownMenuContent side="left">
                 <DropdownMenuItem onClick={(e) => onAction(e)}>
                     <div className="flex items-center">
-                        <Pencil className="size-4 mr-2" />
+                        <PencilIcon className="size-4 mr-2" />
                         Bewerken
                     </div>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                     <ConfirmModal onConfirm={() => onRemove()}>
                         <div className="flex items-center">
-                            <Trash2 className="size-4 mr-2" />
+                            <Trash2Icon className="size-4 mr-2" />
                             Verwijderen
                         </div>
                     </ConfirmModal>

@@ -26,7 +26,7 @@ const VehiclesClient = () => {
 
     return (
         <div className="flex flex-1 flex-col h-full gap-2">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div className="flex flex-col">
                     <h1 className="text-3xl font-bold">
                         Voertuigen
@@ -44,21 +44,18 @@ const VehiclesClient = () => {
                     Toevoegen
                 </Button>
             </div>
-            <div className="flex items-center"> </div>
             <Separator className="my-4" />
-            <div className="h-full space-y-4">
-                <div className="grid grid-cols-1 gap-4">
-                    {data.length > 0 ? (
-                        data.map((vehicle) => (
-                            <VehicleCard
-                                key={vehicle.id}
-                                vehicle={vehicle}
-                            />
-                        ))
-                    ) : (
-                        <EmptyState />
-                    )}
-                </div>
+            <div className="flex flex-col mx-auto h-full gap-4">
+                {data.length > 0 ? (
+                    data.map((vehicle) => (
+                        <VehicleCard
+                            key={vehicle.id}
+                            vehicle={vehicle}
+                        />
+                    ))
+                ) : (
+                    <EmptyState />
+                )}
             </div>
         </div>
     );

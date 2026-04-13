@@ -1,7 +1,6 @@
-import { Dialog } from "@radix-ui/react-dialog"
 import { useMedia } from "react-use"
-import { DialogContent } from "../ui/dialog"
-import { Drawer, DrawerContent } from "../ui/drawer"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog"
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "../ui/drawer"
 
 interface ResponsiveModalProps {
     children: React.ReactNode
@@ -10,12 +9,15 @@ interface ResponsiveModalProps {
 }
 
 export const ResponsiveModal = ({ children, open, onOpenChange }: ResponsiveModalProps) => {
-    const isDesktop = useMedia("(min-width: 1024px)", true)
+    const isDesktop = useMedia("(min-width: 768px)", true)
 
     if (isDesktop) {
         return (
             <Dialog open={open} onOpenChange={onOpenChange}>
-                <DialogContent className="w-full sm:max-w-lg p-0 border-none overflow-y-auto hide-scrollbar max-h-[85vh]">
+                <DialogContent className="px-0">
+                    <DialogHeader className="sr-only">
+                        <DialogTitle></DialogTitle>
+                    </DialogHeader>
                     {children}
                 </DialogContent>
             </Dialog>
@@ -25,6 +27,9 @@ export const ResponsiveModal = ({ children, open, onOpenChange }: ResponsiveModa
     return (
         <Drawer open={open} onOpenChange={onOpenChange}>
             <DrawerContent>
+                <DrawerHeader className="sr-only">
+                    <DrawerTitle></DrawerTitle>
+                </DrawerHeader>
                 <div className="overflow-y-auto hide-scrollbar max-h-[85vh]">
                     {children}
                 </div>

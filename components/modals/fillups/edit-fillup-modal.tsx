@@ -8,7 +8,7 @@ export const EditFillupModal = () => {
     const { isOpen, onClose, type, data } = useModal()
 
     const isModalOpen = isOpen && type === "editFillup"
-    const { fillup } = data
+    const { fillup, selectedVehicle } = data
 
     return (
         <ResponsiveModal
@@ -17,6 +17,7 @@ export const EditFillupModal = () => {
         >
             <EditFillupFormWrapper
                 onCancel={onClose}
+                selectedVehicle={selectedVehicle!}
                 initialValues={fillup!}
             />
         </ResponsiveModal>

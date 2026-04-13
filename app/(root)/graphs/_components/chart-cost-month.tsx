@@ -22,48 +22,56 @@ export const ChartCostMonth = ({ data }: { data: GraphDataType }) => {
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
                 {dataAvailable ? (
-                    <ResponsiveContainer width={"100%"} height={300}>
-                        <BarChart
-                            height={300}
-                            data={monthlyCosts}
-                            barCategoryGap={5}
-                        >
-                            <defs>
-                                <linearGradient id="gradientBar" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset={"0"} stopColor="#f43f5e" stopOpacity={"1"} />
-                                    <stop offset={"1"} stopColor="#f43f5e" stopOpacity={"0"} />
-                                </linearGradient>
-                            </defs>
-                            <XAxis
-                                dataKey="month"
-                                tickLine={false}
-                                axisLine={false}
-                                tickMargin={8}
-                                tickFormatter={(val) => format(new Date(val), "MMM yy")}
-                            />
-                            <YAxis
-                                stroke="#888888"
-                                fontSize={12}
-                                tickLine={false}
-                                axisLine={false}
-                                label={{
-                                    value: "Totaal bedrag",
-                                    angle: -90,
-                                    position: "insideLeft",
-                                    fill: "#888888"
-                                }}
-                            />
-                            <CartesianGrid vertical={false} strokeDasharray="5 5" />
-                            <Tooltip content={<CustomTooltip />} />
-                            <Bar
-                                dataKey="totalCost"
-                                label="TEST"
-                                fill="url(#gradientBar)"
-                                radius={[4, 4, 0, 0]}
-                                strokeWidth={2}
-                            />
-                        </BarChart>
-                    </ResponsiveContainer>
+                    <div className="w-full overflow-x-auto">
+                        <div className="min-w-[600px]">
+                            <ResponsiveContainer width={"100%"} height={300}>
+                                <BarChart
+                                    height={300}
+                                    data={monthlyCosts}
+                                    barCategoryGap={5}
+                                >
+                                    <defs>
+                                        <linearGradient id="gradientBar" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset={"0"} stopColor="#f43f5e" stopOpacity={"1"} />
+                                            <stop offset={"1"} stopColor="#f43f5e" stopOpacity={"0"} />
+                                        </linearGradient>
+                                    </defs>
+                                    <XAxis
+                                        dataKey="month"
+                                        tickLine={false}
+                                        axisLine={false}
+                                        tickMargin={8}
+                                        tickFormatter={(val) => format(new Date(val), "MMM yy")}
+                                    />
+                                    <YAxis
+                                        stroke="#888888"
+                                        fontSize={12}
+                                        tickLine={false}
+                                        axisLine={false}
+                                        domain={[
+                                            (dataMin: number) => Math.floor(dataMin / 100) * 100,
+                                            (dataMax: number) => Math.ceil(dataMax / 100) * 100
+                                        ]}
+                                        label={{
+                                            value: "Totaal bedrag",
+                                            angle: -90,
+                                            position: "insideLeft",
+                                            fill: "#888888"
+                                        }}
+                                    />
+                                    <CartesianGrid vertical={false} strokeDasharray="5 5" />
+                                    <Tooltip content={<CustomTooltip />} />
+                                    <Bar
+                                        dataKey="totalCost"
+                                        label="TEST"
+                                        fill="url(#gradientBar)"
+                                        radius={[4, 4, 0, 0]}
+                                        strokeWidth={2}
+                                    />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
                 ) : (
                     <div>
                         <Card className="flex h-[300px] flex-col items-center justify-center bg-background">

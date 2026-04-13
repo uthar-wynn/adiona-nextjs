@@ -31,7 +31,5 @@ export const GroupFillupsByMonth = (fillups: EnrichedFillup[]): Record<string, E
             groups[monthKey].push(fillup)
 
             return groups
-        },
-        {}
-    )
+        }, {})
 }

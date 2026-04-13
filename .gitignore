@@ -40,3 +40,4 @@ todo.md
 
 docker-compose.yml
 .dockerignore
+/generated/

@@ -1,4 +1,4 @@
-export function currencyFilter(value: number, digits: number = 2): string {
+export function currencyFilter(value: number, digits = 2): string {
     return new Intl.NumberFormat("nl-BE", {
         style: "currency",
         currency: "EUR",
@@ -15,7 +15,7 @@ export function numberFormatter(value: number): string {
     return value.toFixed(2)
 }
 
-export function digitFormatter(value: number, digits: number = 2): string {
+export function digitFormatter(value: number, digits = 2): string {
     return new Intl.NumberFormat("nl-BE", {
         minimumFractionDigits: digits,
         maximumFractionDigits: digits,

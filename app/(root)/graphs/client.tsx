@@ -35,26 +35,28 @@ const GraphsClient = () => {
             </div>
             <div className="h-full py-6 items-center w-full">
                 <Tabs defaultValue="fuel-usage">
-                    <TabsList className="w-full">
-                        <TabsTrigger value="fuel-usage" className="w-full">
-                            Branfstofverbruik
-                        </TabsTrigger>
-                        <TabsTrigger value="cost-month" className="w-full">
-                            Maandelijkse kosten
-                        </TabsTrigger>
-                        <TabsTrigger value="fuel-price" className="w-full">
-                            Branfstofprijs
-                        </TabsTrigger>
-                        <TabsTrigger value="cost-fuel" className="w-full">
-                            Kosten tankbeurt
-                        </TabsTrigger>
-                        <TabsTrigger value="total-distance" className="w-full">
-                            Totaal kilometerteller
-                        </TabsTrigger>
-                        <TabsTrigger value="monthly-distance" className="w-full">
-                            Maandelijks afgelegde afstand
-                        </TabsTrigger>
-                    </TabsList>
+                    <div className="w-full overflow-x-auto">
+                        <TabsList className="inline-flex min-w-max">
+                            <TabsTrigger value="fuel-usage">
+                                Brandstofverbruik
+                            </TabsTrigger>
+                            <TabsTrigger value="cost-month">
+                                Maandelijkse kosten
+                            </TabsTrigger>
+                            <TabsTrigger value="fuel-price">
+                                Brandstofprijs
+                            </TabsTrigger>
+                            <TabsTrigger value="cost-fuel">
+                                Kosten tankbeurt
+                            </TabsTrigger>
+                            <TabsTrigger value="total-distance">
+                                Totaal kilometerteller
+                            </TabsTrigger>
+                            <TabsTrigger value="monthly-distance">
+                                Maandelijks afgelegde afstand
+                            </TabsTrigger>
+                        </TabsList>
+                    </div>
                     <TabsContent value="fuel-usage">
                         <ChartFuelUsage data={data} />
                     </TabsContent>

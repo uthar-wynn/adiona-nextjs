@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 import { GaugeCircle } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
 export const ChartTotalDistance = ({ data }: { data: GraphDataType }) => {
     const { fillups } = data
@@ -22,42 +22,49 @@ export const ChartTotalDistance = ({ data }: { data: GraphDataType }) => {
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
                 {dataAvailable ? (
-                    <ResponsiveContainer width={"100%"} height={300}>
-                        <AreaChart
-                            height={300}
-                            data={fillups}
-                        >
-                            <XAxis
-                                dataKey="date"
-                                tickLine={false}
-                                axisLine={false}
-                                tickMargin={8}
-                                tickFormatter={(value) => format(value, "dd MMM yy")}
-                            />
-                            <YAxis
-                                stroke="#888888"
-                                fontSize={12}
-                                tickLine={false}
-                                axisLine={false}
-                                label={{
-                                    value: "Afstand (km)",
-                                    angle: -90,
-                                    position: "insideLeft",
-                                    fill: "#888888"
-                                }}
-                            />
-                            <CartesianGrid vertical={false} strokeDasharray="5 5" />
-                            <Tooltip content={<CustomTooltip />} />
-                            <Area
-                                dataKey="distance"
-                                type="monotone"
-                                stroke="#eab308"
-                                fill="#eab308"
-                                fillOpacity={0.4}
-                                strokeWidth={2}
-                            />
-                        </AreaChart>
-                    </ResponsiveContainer>
+                    <div className="w-full overflow-x-auto">
+                        <div className="min-w-[600px]">
+                            <ResponsiveContainer width={"100%"} height={300}>
+                                <LineChart
+                                    height={300}
+                                    data={fillups}
+                                >
+                                    <XAxis
+                                        dataKey="date"
+                                        tickLine={false}
+                                        axisLine={false}
+                                        tickMargin={8}
+                                        tickFormatter={(value) => format(value, "dd MMM yy")}
+                                    />
+                                    <YAxis
+                                        stroke="#888888"
+                                        fontSize={12}
+                                        tickLine={false}
+                                        axisLine={false}
+                                        domain={[
+                                            (dataMin: number) => Math.floor(dataMin / 1000) * 1000,
+                                            (dataMax: number) => Math.ceil(dataMax / 1000) * 1000
+                                        ]}
+                                        label={{
+                                            value: "Afstand (km)",
+                                            angle: -90,
+                                            position: "insideLeft",
+                                            fill: "#888888"
+                                        }}
+                                    />
+                                    <CartesianGrid vertical={false} strokeDasharray="5 5" />
+                                    <Tooltip content={<CustomTooltip />} />
+                                    <Line
+                                        dataKey="distance"
+                                        type="linear"
+                                        stroke="#eab308"
+                                        strokeWidth={2}
+                                        dot={false}
+                                    />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
                 ) : (
                     <div>
                         <Card className="flex h-[300px] flex-col items-center justify-center bg-background">

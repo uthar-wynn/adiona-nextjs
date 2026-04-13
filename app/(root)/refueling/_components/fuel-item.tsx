@@ -20,46 +20,46 @@ export const FuelItem = ({
     return (
         <Card>
             <CardContent className="p-4">
-                <div className="flex flex-row justify-between">
-                    <div className="flex flex-col space-y-4">
-                        <div className="flex space-x-6 items-center">
-                            <div className="bg-secondary size-12 rounded-full flex items-center justify-center">
-                                <Fuel className="size-6" />
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="text-sm text-muted-foreground">
-                                    {format(fillup.date, "dd-MM-yyyy")}
-                                </span>
-                                <span>
-                                    {currencyFilter(fillup.volume_price)}
-                                </span>
-                            </div>
-                        </div>
-                        <span className="flex space-x-4 items-center">
-                            <Droplet className="size-4 text-cyan-600" />
-                            <p>
-                                {fillup.fuel} l &rarr; {fillup.unit_price} €/L
-                            </p>
-                        </span>
+                <div className="flex flex-col gap-4">
+                    <div className="flex justify-end h-4">
+                        <FuelItemActions fillup={fillup} selectedVehicle={vehicle} />
                     </div>
-                    <div className="flex space-x-3">
-                        <div className="flex flex-col">
-                            <span>
-                                {fillup.distance} km
-                            </span>
-                            {!fillup.isFirst && (
-                                <span className="text-sm text-muted-foreground">
-                                    {distanceFormatter(fillup.drivenDistance)}
-                                </span>
-                            )}
+                    <div className="grid grid-cols-[auto_1fr_auto] items-start gap-4">
+                        <div className="bg-secondary flex size-12 shrink-0 items-center justify-center rounded-full">
+                            <Fuel className="size-6" />
                         </div>
-                        <FuelItemActions fillup={fillup} />
+                        <div className="min-w-0">
+                            <div className="text-sm text-muted-foreground">
+                                {format(fillup.date, "dd-MM-yyyy")}
+                            </div>
+                            <div className="font-semibold">
+                                {currencyFilter(fillup.volume_price)}
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <div className="text-right">
+                                <div className="font-semibold whitespace-nowrap">
+                                    {fillup.distance} km
+                                </div>
+                                {!fillup.isFirst && (
+                                    <div className="text-sm text-muted-foreground whitespace-nowrap">
+                                        {distanceFormatter(fillup.drivenDistance)}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Droplet className="size-4 shrink-0 text-cyan-600" />
+                        <span>
+                            {fillup.fuel} l &rarr; {fillup.unit_price} €/L
+                        </span>
                     </div>
                 </div>
             </CardContent>
             <Separator />
             <CardFooter className="p-4">
-                <div className="flex space-x-8 items-center">
+                <div className="flex gap-8 items-center">
                     {!fillup.isFirst ? (
                         fillup.full ? (
                             <>

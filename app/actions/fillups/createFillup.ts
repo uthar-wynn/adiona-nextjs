@@ -28,7 +28,7 @@ export default async function CreateFillup({ data }: { data: fillupSchemaType })
 
         let lastDistanceValue = lastFillup?.distance ? (distance - lastFillup?.distance) : 0
         let calculatedConsumption = 0
-        let newDistance = distance
+        const newDistance = distance
         let newFullValue = full
 
         if (counter === "Dagteller") {

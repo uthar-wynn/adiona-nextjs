@@ -9,10 +9,10 @@ export const CardLastInput = ({ data }: { data: DashboardDataType }) => {
     return (
         <div className="flex flex-col gap-4">
             <Button variant="outline">
-                <TrendingUp className="size-4 mr-1 text-cyan-600" />
+                <TrendingUp className="size-4 mr-2 text-cyan-600" />
                 Laatste ingave
             </Button>
-            <Card className="min-w-[400px]">
+            <Card className="w-full">
                 <CardContent className="p-4">
                     <div className="flex flex-col gap-2">
                         {data.lastLogs.map((log) => (

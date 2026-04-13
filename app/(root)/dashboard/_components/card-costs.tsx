@@ -14,11 +14,11 @@ export const CardCosts = ({ data }: { data: DashboardDataType }) => {
                     href="/costs"
                     className={badgeVariants({ variant: "outline" })}
                 >
-                    <BadgeDollarSign className="size-4 mr-1 text-cyan-600" />
+                    <BadgeDollarSign className="size-4 mr-2 text-cyan-600" />
                     Kosten
                 </Link>
             </Button>
-            <Card className="min-w-[400px]">
+            <Card className="w-full">
                 <CardContent className="p-4">
                     <div className="flex flex-col gap-2">
                         <span className="text-muted-foreground">

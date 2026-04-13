@@ -67,7 +67,7 @@ model Costs {
   category        String
   title           String
   cost            Float?    @default(0)
-  date            DateTime?
+  date            DateTime  @default(now())
   is_income       Boolean
   repeat          String
   notes           String?   @db.LongText // LongText

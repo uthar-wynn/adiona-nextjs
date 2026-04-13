@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -107,11 +107,6 @@ export const CreateFillupForm = ({
                             onSubmit={form.handleSubmit(onSubmit)}
                             className="space-y-8"
                         >
-                            {Object.keys(form.formState.errors).length > 0 && (
-                                <pre>
-                                    {JSON.stringify(form.formState.errors, null, 4)}
-                                </pre>
-                            )}
                             <FormField
                                 control={form.control}
                                 name="counter"
@@ -158,9 +153,15 @@ export const CreateFillupForm = ({
                                             <Input
                                                 disabled={isPending}
                                                 placeholder="Afstand"
+                                                inputMode="numeric"
                                                 {...field}
                                             />
                                         </FormControl>
+                                        {selectedVehicle.lastDistance > 0 && (
+                                            <FormDescription>
+                                                Laatste waarde: {selectedVehicle.lastDistance} km
+                                            </FormDescription>
+                                        )}
                                         <FormMessage />
                                     </FormItem>
                                 )}
@@ -178,6 +179,7 @@ export const CreateFillupForm = ({
                                                 onChangeCapture={(e) => handleFuelChange()}
                                                 disabled={isPending}
                                                 placeholder="Brandstof"
+                                                inputMode="decimal"
                                                 {...field}
                                             />
                                         </FormControl>
@@ -199,6 +201,7 @@ export const CreateFillupForm = ({
                                                     onChangeCapture={(e) => handlePriceChange()}
                                                     disabled={isPending}
                                                     placeholder="Prijs/l"
+                                                    inputMode="decimal"
                                                     {...field}
                                                 />
                                             </FormControl>
@@ -218,6 +221,7 @@ export const CreateFillupForm = ({
                                                 <Input
                                                     disabled={isPending}
                                                     placeholder="Totale kosten"
+                                                    inputMode="decimal"
                                                     {...field}
                                                 />
                                             </FormControl>
@@ -226,7 +230,7 @@ export const CreateFillupForm = ({
                                     )}
                                 />
                             </div>
-                            <div className="grid grid-cols-1 lg:grid-cols-2">
+                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 items-center">
                                 <FormField
                                     control={form.control}
                                     name="date"
@@ -241,7 +245,7 @@ export const CreateFillupForm = ({
                                                         <Button
                                                             variant="outline"
                                                             className={cn(
-                                                                "w-60 pl-3 text-left font-normal",
+                                                                "w-full md:w-60 pl-3 text-left font-normal",
                                                                 !field.value && "text-muted-foreground"
                                                             )}
                                                         >
@@ -274,15 +278,18 @@ export const CreateFillupForm = ({
                                     control={form.control}
                                     name="full"
                                     render={({ field }) => (
-                                        <FormItem className="flex flex-row items-center space-x-3 space-y-0 justify-center">
-                                            <FormControl>
-                                                <Checkbox
-                                                    checked={field.value}
-                                                    onCheckedChange={field.onChange}
-                                                />
-                                            </FormControl>
-                                            <div className="space-y-1 leading-none">
-                                                <FormLabel>
+                                        <FormItem className="px-2">
+                                            <FormLabel className="hidden md:block invisible">
+                                                Volle tank
+                                            </FormLabel>
+                                            <div className="flex items-center space-x-3">
+                                                <FormControl>
+                                                    <Checkbox
+                                                        checked={field.value}
+                                                        onCheckedChange={field.onChange}
+                                                    />
+                                                </FormControl>
+                                                <FormLabel className="m-0">
                                                     Volle tank
                                                 </FormLabel>
                                             </div>

@@ -33,7 +33,7 @@ const CostsClient = () => {
 
     return (
         <div className="flex flex-1 flex-col h-full gap-2">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div className="flex flex-col">
                     <h1 className="text-3xl font-bold">
                         Kosten
@@ -54,20 +54,19 @@ const CostsClient = () => {
             <Separator className="my-4" />
             <div className="h-full space-y-4">
                 <div className="flex flex-col gap-4">
-                    {data.length > 0
-                        ? (data.map((cost) => (
-                            <CostItem
-                                key={cost.id}
-                                cost={cost}
-                            />
-                        ))
-                        ) : (
-                            <EmptyState
-                                title="Er zijn geen kosten gevonden voor dit voertuig"
-                                subtitle="Voeg een kost toe"
-                            />
-                        )
-                    }
+                    {Object.keys(data).map((month) => (
+                        <div className="space-y-2" key={month}>
+                            <span className="text-lg font-semibold text-muted-foreground">
+                                {month}
+                            </span>
+                            {data[month].map((cost) => (
+                                <CostItem
+                                    key={cost.id}
+                                    cost={cost}
+                                />
+                            ))}
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

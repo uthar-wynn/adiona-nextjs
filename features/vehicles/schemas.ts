@@ -2,7 +2,7 @@ import { FuelType } from "@prisma/client";
 import { z } from "zod";
 
 export const vehicleSchema = z.object({
-    name: z.string().min(1),
+    name: z.string().min(1, { message: "Naam is verplicht" }),
     description: z.optional(z.string()),
     fuel_type: z.nativeEnum(FuelType),
     vin: z.optional(z.string()),

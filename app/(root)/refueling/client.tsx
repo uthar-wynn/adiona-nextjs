@@ -33,7 +33,7 @@ const RefuelingClient = () => {
 
     return (
         <div className="flex flex-1 flex-col h-full gap-2">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div className="flex flex-col">
                     <h1 className="text-3xl font-bold">
                         Tankbeurten
@@ -52,11 +52,11 @@ const RefuelingClient = () => {
                 </Button>
             </div>
             <Separator className="my-4" />
-            <div className="h-full space-y-4">
+            <div className="h-full space-y-4 w-full mx-auto md:max-w-[600px]">
                 {Object.keys(data).map((month) => (
                     <div
                         key={month}
-                        className="space-y-3"
+                        className="space-y-2"
                     >
                         <span className="text-lg font-semibold text-muted-foreground">
                             {month}

@@ -4,76 +4,38 @@ Alle opmerkelijke wijzigingen aan dit project worden in dit bestand gedocumentee
 
 Het format is gebaseerd op [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), en dit project houdt zich aan [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.2] - 2025-09-07
+## [0.1.3] - 2026-04-13
 
 ## Added
-- N/A
+- Dashboard: Nieuwe card toegevoegd: Trends: vereenvoudigde grafieken gebaseerd op andere pagina.
 
 ## Changed
 
 ### Algemeen
-- N/A
+   - UI: Sidebar aangepast naar Shadcn Sidebar.
+   - UI: Typos verbeterd.
+   - Kleine verbeteringen.
 
 ### Dashboard
-- Dashboard: UI verbeterd.
-- Bug: Bij laatste brandstofprijs werdt er alleen rekening gehouden met een gestegen of gedaalde waarde, maar niet indien waarde hetzelfde bleef.
-- Laaste ingave: Dit is aangepast zodat ongeacht wat, de laatste 7 kosten en of tankbeurten worden weergegeven.
+   - Fix: UI: Uitlijningen waren niet helemaal correct, dit is nu opgelost.
 
 ### Voertuigen
-- N/A
+   - UI: Algemeen uiterlijk is ook beter responsive gemaakt.
 
 ### Tankbeurten
-- Bug: Er zat een kleine fout in de bepaling van het gemiddeld verbruik, waardoor de kleur niet altijd werkt.
+   - UI: Algemeen uiterlijk is ook beter responsive gemaakt + kleine verbeteringen.
+   - UI: Op smartphones worden nu enkel numerieken toetsenbord weergegeven waar nodig.
 
 ### Statistieken
-- Berekeningen aangepast voor de gemiddeldes van dag en maand.
-- De duizendtallen wordten nu ook met een punt (.) gescheiden.
+   - N/A
 
 ### Grafieken
-- N/A
+  - UI: Grafieken responsive gemaakt.
+  - UI: Grafieken verder verfijnd, Y-assen aangepast, ...
 
 ### Kosten
-- UI: Icon verwijderd en letter in de plaats gezet.
+   - UI: Algemeen uiterlijk is ook beter responsive gemaakt + gelijkaardig gemaakt aan tankbeurten.
+   - UI: Op smartphones worden nu enkel numerieken toetsenbord weergegeven waar nodig.
 
 ### Fixed
-- N/A
-
-## [0.1.1] - 2025-01-03
-
-## Added
-- Countup toegevoegd, dit is al reeds verwerkt op sommige plekken (grafieken).
-
-## Changed
-
-### Algemeen
-- Voertuig selectie: Popup verwijderd en rechtstreeks een select gemaakt.
-- Mobiel => Menu: Sluit automatisch als er van pagina wordt gewisseld.
-
-### Dashboard
-- Dashboard: Iconen laatste verbruik/brandstofprijs zijn dynamisch gemaakt.
-
-### Voertuigen
-- UI verder afgewerkt en onnodige zaken verwijderd.
-
-### Tankbeurten
-- Onderverderling gemaakt per maand.
-- Datepicker uitgebreid bij toevoegen/aanpassen tankbeurt.
-
-### Statistieken
-- Kosten: Iconen laatste verbruik/brandstofprijs zijn dynamisch gemaakt.
-
-### Grafieken
-- N/A
-
-### Kosten
-- UI: Icon verwijderd en letter in de plaats gezet.
-
-### Fixed
-- Bug: Er zat een kleine fout in de weergave van de statistieken. Dit is nu verholpen.
-- Bug: Bij het opslaan van een tankbeurt op een voertuig met meerdere beurten werdt de volle tank uitgevinkt.
-
-## [0.1.0] - 2024-12-25
-
-### Added
-
-- Eerste release van de applicatie.
+   - Tankbeurten: Het was mogelijk om een tankbeurt toe te voegen zonder enige gegevens, de afstand is nu een verplicht vak.

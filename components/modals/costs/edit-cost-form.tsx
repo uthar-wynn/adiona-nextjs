@@ -164,6 +164,7 @@ export const EditCostForm = ({
                                                 <Input
                                                     disabled={isPending}
                                                     placeholder="Totale kosten"
+                                                    inputMode="decimal"
                                                     {...field}
                                                 />
                                             </div>
@@ -250,6 +251,7 @@ export const EditCostForm = ({
                                                 <Input
                                                     disabled={isPending}
                                                     placeholder="Kilometerteller"
+                                                    inputMode="numeric"
                                                     {...field}
                                                 />
                                             </div>

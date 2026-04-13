@@ -1,4 +1,5 @@
 import { EnrichedFillup } from "@/app/actions/fillups/enrich-fillups"
+import { ActiveVehiclesType } from "@/app/actions/vehicles/getActiveVehicles"
 import { ConfirmModal } from "@/components/modals/confirm-modal"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -11,10 +12,12 @@ import { toast } from "sonner"
 
 interface FuelItemActionsProps {
     fillup: EnrichedFillup
+    selectedVehicle: ActiveVehiclesType[number]
 }
 
 export const FuelItemActions = ({
-    fillup
+    fillup,
+    selectedVehicle
 }: FuelItemActionsProps) => {
     const queryClient = useQueryClient()
     const { onOpen } = useModal()
@@ -35,9 +38,9 @@ export const FuelItemActions = ({
 
     const onAction = useCallback((e: React.MouseEvent) => {
         e.stopPropagation()
-        onOpen("editFillup", { fillup })
+        onOpen("editFillup", { fillup, selectedVehicle })
 
-    }, [onOpen, fillup])
+    }, [onOpen, fillup, selectedVehicle])
 
     const onRemove = useCallback(() => {
         mutate()
@@ -47,7 +50,7 @@ export const FuelItemActions = ({
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
-                    <MoreVertical className="size-6 text-zinc-500" />
+                    <MoreVertical className="size-4 text-zinc-500" />
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent side="left">
